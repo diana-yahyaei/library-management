@@ -4,55 +4,65 @@ let library = [
   { title: "Learn Node.js", author: "Jane Smith", available: true },
   { title: "Frontend Guide", author: "Mike Johnson", available: false },
 ];
-
+for (let i = 0; i < library.length; i++) {
+  console.log(
+    `${library[i].title}(${
+      library[i].available ? "available" : "not available"
+    })`
+  );
+}
 let user = {
   name: "Alice",
-  borrowedBooks: [1],
+  borrowedBooks: [],
   borrowBook: function (bookTitle) {
-    // implement borrowing logic here
-    if (library.includes(library[0]) === true) {
-      console.log(
-        "user" +
-          object.name +
-          " borrowed" +
-          library[0] +
-          "total borrowed:" +
-          this.borrowBook
-      );
-    } else if (library.includes(library[0]) === false) {
-      console.log(`sorry ${library[0]} is not available`);
-    } else {
-      console.log(`${library[0]} not founded`);
+    let book = library.find((b) => b.title === bookTitle);
+    if (!book) {
+      console.log(`${bookTitle} is not founded in the library`);
+      return;
+    } else if (!book.available) {
+      console.log(`sorry ${bookTitle} is not available`);
+      return;
     }
+    book.available = false;
+    this.borrowBook.push(bookTitle);
+    console.log(`user ${this.name}borrowed${bookTitle} `);
+
+    this.showBooks();
   },
+
   returnBook: function (bookTitle) {
-    // implement returning logic here
-    if (user.borrowBook === true) {
-      user.borrowBook = 0;
-      console.log("user" + user.name + "returned" + library[0]);
-    } else {
-      console.log(`user has not borrowed ${library[0]}`);
+    let bookindex = this.borrowedBooks.indexOf(bookTitle);
+    if (bookindex === -1) {
+      console.log(`user has not borrowed this book(${bookTitle})`);
+      return;
     }
+    this.borrowedBooks.slice(index, 1);
+    let book = library.find((b) => b.title === bookTitle);
+    book.available = true;
+    console.log(`User ${this.name} returned "${bookTitle}"`);
+  },
+
+  showBooks: function () {
+    for (let i = 0; i < this.borrowedBooks.length; i++) {
+      console.log(`${this.borrowedBooks[i]}`);
+    }
+    console.log(`total borrowed: ${this.borrowedBooks.length}`);
+
+    let total = 0;
+
+    let count = this.borrowedBooks.length;
+    while (count > 0) {
+      count--;
+      total++;
+    }
+    console.log(`total borrowed: ${total}`);
   },
 };
-// let user2 = {
-//   name: "hanna",
-//   borrowedBooks: [],
-//   borrowBook: function (bookTitle) {
-//     // implement borrowing logic here
-//   },
-//   returnBook: function (bookTitle) {
-//     // implement returning logic here
-//   },
-// };
-for (let i = 0; i < library.length; i++) {
-  console.log(library[i]);
-}
-
-const name = prompt("enter book`s name you want:");
-console.log(library.includes(library[0]));
-console.log(borrowBook);
-console.log(user.borrowBook);
-while (user.borrowBook === true) {
-  borrowBook++;
+function displayLibrary() {
+  console.log(`Available books in library:`);
+  for (let book of library) {
+    console.log(
+      `- ${book.title} (${book.available ? "Available" : "Not Available"})`
+    );
+  }
 }
